@@ -1,35 +1,27 @@
 //variabile express
 const express = require('express');
-const posts = require('../data/postsData')
+const postController = require('../controllers/postController')
 
 //variabile router
 const router = express.Router();
 
 // index 
-router.get('/', function (req, res) {
-    res.send('Lista dei posts');
-});
+router.get('/', postController.index);
+
 
 // show 
-router.get('/:id', function (req, res) {
-    res.json(posts[req.params.id])
-});
+router.get('/:id', postController.show);
+
 
 // create
-router.post('/', function (req, res) {
-    res.send('Creazione nuovo post');
-});
+router.post('/', postController.create);
 
 //update
-router.put('/:id', function (req, res) {
-    res.send('Modificare il post ' + req.params.id);
-});
+router.put('/:id', postController.update);
 
 
 //destroy
-router.delete('/:id', function (req, res) {
-    res.send('Distruggere il post ' + req.params.id);
-});
+router.delete('/:id', postController.destroy);
 
 
 module.exports = router;
