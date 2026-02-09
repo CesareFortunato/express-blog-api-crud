@@ -1,6 +1,10 @@
 const posts = require('../data/postsData');
 
 
+// funzione per centralizzare parseInt dell'ID
+const parseId = (req) => parseInt(req.params.id);
+
+
 // logica index
 function index(req, res) {
     let filteredPosts = posts;
@@ -20,7 +24,7 @@ function index(req, res) {
 function show(req, res) {
 
     // prendo id dall'URL e lo trasformiamo in un numero
-    const id = parseInt(req.params.id)
+    const id = parseId(req);
 
     const post = posts.find(post => post.id === id);
 
@@ -47,7 +51,7 @@ function create(req, res) {
 function update(req, res) {
 
     // prendo id dall'URL e lo trasformiamo in un numero
-    const id = parseInt(req.params.id)
+    const id = parseId(req);
 
     const post = posts.find(post => post.id === id);
 
@@ -71,7 +75,7 @@ function update(req, res) {
 function destroy(req, res) {
 
     // prendo id dall'URL e lo trasformiamo in un numero
-    const id = parseInt(req.params.id)
+    const id = parseId(req);
 
 
     // cerchiamo il post con l'id corrispondente
