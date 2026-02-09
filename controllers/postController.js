@@ -3,14 +3,14 @@ const posts = require('../data/postsData');
 
 // logica index
 function index(req, res) {
-    res.json(posts)    
-    
+    res.json(posts)
+
 }
 
 // logica show
 function show(req, res) {
 
-     // prendo id dall'URL e lo trasformiamo in un numero
+    // prendo id dall'URL e lo trasformiamo in un numero
     const id = parseInt(req.params.id)
 
     const post = posts.find(post => post.id === id);
@@ -30,15 +30,27 @@ function show(req, res) {
 
 // logica create
 function create(req, res) {
-    console.log("creo cose");
+    res.send("creo cose")
 }
 
 
 // logica update
 function update(req, res) {
 
-     // prendo id dall'URL e lo trasformiamo in un numero
+    // prendo id dall'URL e lo trasformiamo in un numero
     const id = parseInt(req.params.id)
+
+    const post = posts.find(post => post.id === id);
+
+    if (!post) {
+        return res.status(404).json({ message: "Post non trovato" });
+    }
+
+
+    res.json({
+        post: post,
+        message: `Modifico il post con id ${id}`
+    });
 }
 
 
@@ -59,7 +71,6 @@ function destroy(req, res) {
         res.status(404);
 
         return res.json({
-            status: 404,
             error: "Not Found",
             message: "Questo post non esiste"
         })
@@ -69,12 +80,12 @@ function destroy(req, res) {
     posts.splice(posts.indexOf(post), 1);
 
     console.log(posts);
-    
+
 
 
     // messaggio di status corretto
     res.sendStatus(204)
 }
 
-module.exports = {index, show, create, update, destroy}
+module.exports = { index, show, create, update, destroy }
 
