@@ -4,9 +4,16 @@ const posts = require('../data/postsData');
 // funzione per centralizzare parseInt dell'ID
 const parseId = (req) => parseInt(req.params.id);
 
-// funzione per cntralizzare il find dall' ID
 
+// funzione per cntralizzare il find dall' ID
 const findPostByID = (id) => posts.find(post => post.id === id);
+
+
+// funzione per centralizzare il messaggio d'errore
+function notFound(res, message = "Risorsa non trovata") {
+  return res.status(404).json({ error: "Not Found", message });
+}
+
 
 
 // logica index
@@ -16,7 +23,7 @@ function index(req, res) {
     let filteredPosts = posts;
 
     // filtro l'array
-    if(req.query.tags){
+    if (req.query.tags) {
         filteredPosts = posts.filter(
             post => post.tags.includes(req.query.tags)
         );
@@ -39,12 +46,7 @@ function show(req, res) {
 
     // controllo se il post esiste
     if (!post) {
-        res.status(404);
-
-        return res.json({
-            error: "Not Found",
-            message: "Questo post non esiste"
-        })
+        return notFound(res, "Questo post non esiste")
     }
 
     res.json(post);
@@ -70,10 +72,7 @@ function update(req, res) {
 
     // controllo se il post esiste
     if (!post) {
-        return res.status(404).json({
-            error: "Not Found",
-            message: "Post non trovato"
-        });
+        return notFound(res, "Questo post non esiste")
     }
 
 
@@ -98,12 +97,7 @@ function destroy(req, res) {
     // controllo se il post esiste
 
     if (!post) {
-        res.status(404);
-
-        return res.json({
-            error: "Not Found",
-            message: "Questo post non esiste"
-        })
+        return notFound(res, "Questo post non esiste")
     }
 
     // rimuovo il post
