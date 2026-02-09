@@ -4,11 +4,18 @@ const posts = require('../data/postsData');
 // funzione per centralizzare parseInt dell'ID
 const parseId = (req) => parseInt(req.params.id);
 
+// funzione per cntralizzare il find dall' ID
+
+const findPostByID = (id) => posts.find(post => post.id === id);
+
 
 // logica index
 function index(req, res) {
+
+    // creo nuova var per il filtro
     let filteredPosts = posts;
 
+    // filtro l'array
     if(req.query.tags){
         filteredPosts = posts.filter(
             post => post.tags.includes(req.query.tags)
@@ -26,8 +33,11 @@ function show(req, res) {
     // prendo id dall'URL e lo trasformiamo in un numero
     const id = parseId(req);
 
-    const post = posts.find(post => post.id === id);
+    // trovo il post con l'id
+    const post = findPostByID(id)
 
+
+    // controllo se il post esiste
     if (!post) {
         res.status(404);
 
@@ -53,8 +63,12 @@ function update(req, res) {
     // prendo id dall'URL e lo trasformiamo in un numero
     const id = parseId(req);
 
-    const post = posts.find(post => post.id === id);
 
+    // trovo il post con l'id
+    const post = findPostByID(id);
+
+
+    // controllo se il post esiste
     if (!post) {
         return res.status(404).json({
             error: "Not Found",
@@ -78,10 +92,10 @@ function destroy(req, res) {
     const id = parseId(req);
 
 
-    // cerchiamo il post con l'id corrispondente
-    const post = posts.find(post => post.id === id);
+    // cerco il post con l'id corrispondente
+    const post = findPostByID(id);
 
-    // controllo se l'id non è valido
+    // controllo se il post esiste
 
     if (!post) {
         res.status(404);
@@ -95,7 +109,7 @@ function destroy(req, res) {
     // rimuovo il post
     posts.splice(posts.indexOf(post), 1);
 
-    console.log(posts);
+    res.json(posts);
 
 
 
