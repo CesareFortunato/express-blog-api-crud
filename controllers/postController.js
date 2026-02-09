@@ -3,7 +3,16 @@ const posts = require('../data/postsData');
 
 // logica index
 function index(req, res) {
-    res.json(posts)
+    let filteredPosts = posts;
+
+    if(req.query.tags){
+        filteredPosts = posts.filter(
+            post => post.tags.includes(req.query.tags)
+        );
+    }
+
+
+    res.json(filteredPosts)
 
 }
 
@@ -43,7 +52,10 @@ function update(req, res) {
     const post = posts.find(post => post.id === id);
 
     if (!post) {
-        return res.status(404).json({ message: "Post non trovato" });
+        return res.status(404).json({
+            error: "Not Found",
+            message: "Post non trovato"
+        });
     }
 
 
