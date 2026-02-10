@@ -1,6 +1,7 @@
 const posts = require('../data/postsData');
 
 
+
 // funzione per centralizzare parseInt dell'ID
 const parseId = (req) => parseInt(req.params.id);
 
@@ -10,8 +11,9 @@ const findPostByID = (id) => posts.find(post => post.id === id);
 
 
 // funzione per centralizzare il messaggio d'errore
+
 function notFound(res, message = "Risorsa non trovata") {
-  return res.status(404).json({ error: "Not Found", message });
+    return res.status(404).json({ error: "Not Found", message });
 }
 
 
@@ -55,7 +57,18 @@ function show(req, res) {
 
 // logica create
 function create(req, res) {
-    res.send("creo cose")
+
+    // creo un id nuovo per ogni post che aggiungo
+    const newId = Date.now();
+
+    // creo un nuovo oggetto post
+    const newPost = {
+        id: newId,
+        title: req.body.title,
+        content: req.body.content,
+        tags: req.body.tags
+    }
+
 }
 
 
@@ -97,7 +110,7 @@ function destroy(req, res) {
     // controllo se il post esiste
 
     if (!post) {
-        return notFound(res, "Questo post non esiste")
+        return notFound(res)
     }
 
     // rimuovo il post

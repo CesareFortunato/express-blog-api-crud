@@ -10,7 +10,11 @@ const posts = require('./data/postsData');
 
 app.use(express.static('public'));
 
+// body-parser
+app.use(express.json());
+
 app.use("/posts", postsRouter)
+
 
 app.get('/', (req, res) => {
     res.json(posts)
