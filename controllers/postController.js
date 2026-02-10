@@ -69,6 +69,16 @@ function create(req, res) {
         tags: req.body.tags
     }
 
+
+    // aggiungo il post alla lista
+    posts.push(newPost);
+
+    console.log(posts);
+
+    res.status(201);
+
+    res.json(newPost);
+
 }
 
 
@@ -88,11 +98,17 @@ function update(req, res) {
         return notFound(res, "Questo post non esiste")
     }
 
+    // aggiorniamo il post
 
-    res.json({
-        post: post,
-        message: `Modifico il post con id ${id}`
-    });
+    post.title = req.body.title;
+    post.content = req.body.content;
+    post.tags = req.body.tags;
+
+    console.log(posts);
+
+    res.json(posts)
+    
+
 }
 
 
