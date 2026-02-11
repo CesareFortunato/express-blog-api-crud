@@ -45,6 +45,8 @@ function show(req, res) {
     // trovo il post con l'id
     const post = findPostByID(id)
 
+    ciovecchio
+
 
     // controllo se il post esiste
     if (!post) {
@@ -60,6 +62,7 @@ function create(req, res) {
 
     // creo un id nuovo per ogni post che aggiungo
     const newId = Date.now();
+
 
     // creo un nuovo oggetto post
     const newPost = {
@@ -134,10 +137,6 @@ function destroy(req, res) {
 
     res.json(posts);
 
-
-
-    // messaggio di status corretto
-    res.sendStatus(204)
 }
 
 module.exports = { index, show, create, update, destroy }

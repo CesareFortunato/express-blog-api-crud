@@ -8,6 +8,10 @@ const postsRouter = require ('./routers/posts');
 //importo i posts
 const posts = require('./data/postsData');
 
+//variabile middleware
+const errorHandler = require("./middlewares/errorHandler")
+const notFound = require("./middlewares/notFound")
+
 app.use(express.static('public'));
 
 // body-parser
@@ -21,6 +25,8 @@ app.get('/', (req, res) => {
     
 })
 
+app.use(errorHandler);
+app.use(notFound);
 
 
 app.listen(port, () => {

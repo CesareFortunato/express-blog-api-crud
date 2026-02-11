@@ -2,6 +2,8 @@
 const express = require('express');
 const postController = require('../controllers/postController')
 
+
+
 //variabile router
 const router = express.Router();
 
@@ -22,6 +24,8 @@ router.put('/:id', postController.update);
 
 //destroy
 router.delete('/:id', postController.destroy);
+
+
 
 
 module.exports = router;
